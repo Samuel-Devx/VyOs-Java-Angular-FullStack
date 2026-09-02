@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { DrawerHeadlessDemo } from "./componentes/sidebar/sidebar";
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, DrawerHeadlessDemo],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
