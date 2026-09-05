@@ -1,0 +1,44 @@
+<p-toolbar>
+  <ng-template #start>
+    <button
+      type="button"
+      (click)="sidebarService.open()"
+      class="flex items-center justify-center h-8 w-8 rounded-md bg-primary hover:bg-primary-emphasis text-primary-contrast hover:shadow-xl hover:shadow-primary-500/40 hover:scale-105 active:scale-95 transition-all duration-200 m-3 cursor-pointer"
+    >
+      <svg data-p-icon="bars" class="h-4 w-4" />
+    </button>
+  </ng-template>
+
+  <ng-template #center>
+    <p-iconfield iconPosition="left">
+      <p-inputicon class="pi pi-search" />
+      <input type="text" pInputText placeholder="Search" />
+    </p-iconfield>
+  </ng-template>
+
+  <ng-template #end>
+    <button pButton severity="secondary" variant="outlined" size="small" label="Cancel">Cancel</button>
+    <button pButton severity="primary" size="small" label="Save" class="ml-2">Novo Cliente</button>
+  </ng-template>
+</p-toolbar>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">
+  <app-client-card
+    name="John Doe"
+    email="john.doe@email.com"
+    number="(24) 99999-9999"
+    status="Active"
+  />
+  <app-client-card
+    name="Jane Smith"
+    email="jane.smith@email.com"
+    number="(24) 88888-8888"
+    status="Active"
+  />
+  <app-client-card
+    name="Samuel"
+    email="samuel@email.com"
+    number="(24) 99999-9999"
+    status="Inactive"
+  />
+</div>

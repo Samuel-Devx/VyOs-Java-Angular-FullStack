@@ -1,9 +1,8 @@
-<li>
-  <a
-    pRipple
-    class="flex items-center cursor-pointer p-3 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple"
-  >
-    <i class="pi mr-2" [class]="'pi-' + icon()"></i>
-    <span class="font-medium text-sm">{{ label() }}</span>
-  </a>
-</li>
+<a
+  pRipple
+  [routerLink]="route()"
+  class="flex items-center cursor-pointer p-3 rounded-border text-surface-700 dark:text-surface-100 hover:bg-surface-100 dark:hover:bg-surface-700 duration-150 transition-colors p-ripple"
+>
+  <i class="pi mr-2" [class]="'pi-' + icon()"></i>
+  <span class="font-medium text-sm">{{ label() }}</span>
+</a>
