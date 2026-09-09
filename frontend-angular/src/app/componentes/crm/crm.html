@@ -23,22 +23,13 @@
 </p-toolbar>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">
-  <app-client-card
-    name="John Doe"
-    email="john.doe@email.com"
-    number="(24) 99999-9999"
-    status="Active"
-  />
-  <app-client-card
-    name="Jane Smith"
-    email="jane.smith@email.com"
-    number="(24) 88888-8888"
-    status="Active"
-  />
-  <app-client-card
-    name="Samuel"
-    email="samuel@email.com"
-    number="(24) 99999-9999"
-    status="Inactive"
-  />
+    @if (loading()) {
+    <p>Carregando clientes...</p>
+  } @else {
+    @for (client of clients(); track client.id) {
+      <app-client-card
+       [name]="client.nome" [number]="client.telefone" [email]="client.email" [status]="client.status"
+      ></app-client-card>
+    }
+  }
 </div>

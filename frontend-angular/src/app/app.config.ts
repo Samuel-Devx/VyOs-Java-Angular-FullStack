@@ -5,7 +5,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';;
 import { definePreset } from '@primeuix/themes';
-
+import { provideHttpClient } from '@angular/common/http';
 const VyCodePreset = definePreset(Aura, {
   primitive: {
     violet: {
@@ -55,6 +55,7 @@ const VyCodePreset = definePreset(Aura, {
 })
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(),
         providePrimeNG({
             theme: {
                 preset: VyCodePreset
