@@ -28,7 +28,7 @@
   } @else {
     @for (client of clients(); track client.id) {
       <app-client-card
-       [name]="client.nome" [number]="client.telefone" [email]="client.email" [status]="client.status"
+       [name]="client.name" [number]="client.phoneNumber" [email]="client.email" [status]="client.stats"
       ></app-client-card>
     }
   }

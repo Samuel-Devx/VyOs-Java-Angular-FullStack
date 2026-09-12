@@ -1,7 +1,7 @@
 export interface ICliente {
   id: number;
-  nome: string;
-  telefone: string;
+  name: string;
+  phoneNumber:string;
   email: string;
-  status: 'Active' | 'Inactive';
+  stats: 'Active' | 'Inactive';
 }

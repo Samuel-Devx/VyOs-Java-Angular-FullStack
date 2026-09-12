@@ -4,7 +4,7 @@ import { inject, Injectable, Service } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class ClienteService {
   private http = inject(HttpClient);
-  private apiUrl = 'https://6a5cf5b80ad09982aef6b9f7.mockapi.io/api/Clientes';
+  private apiUrl = 'http://localhost:8080/api/clientes';
 
   getClientes() {
     return this.http.get(this.apiUrl);
