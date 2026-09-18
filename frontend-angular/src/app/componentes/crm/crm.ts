@@ -10,7 +10,9 @@ import { Bars } from '@primeicons/angular/bars';
 import { ButtonModule } from 'primeng/button';
 import { ClienteService } from '../../clientes/cliente-service';
 import { ICliente } from '../../clientes/icliente';
-@Component({
+import { AvatarModule } from 'primeng/avatar';
+import { DialogModule } from 'primeng/dialog';
+import { ClientData, ClientDialog } from '../shared/client-dialog/client-dialog';@Component({
   standalone: true,
   imports: [
     ToolbarModule,
@@ -21,15 +23,20 @@ import { ICliente } from '../../clientes/icliente';
     InputTextModule,
     ClientCard,
     ButtonModule,
-    Bars
-  ],
+    Bars,
+    AvatarModule,
+    DialogModule,
+    ClientDialog
+],
   selector: 'app-crm',
   styleUrl: './crm.css',
   templateUrl: './crm.html',
 })
 export class Crm {
+
   private clientService = inject(ClienteService);
   sidebarService = inject(SidebarService);
+    showCreateDialog = signal(false);
 
   clients = signal<ICliente[]>([]);
   loading = signal(true);
@@ -45,4 +52,8 @@ export class Crm {
     },
   });
 }
+ onClientCreate(data: ClientData): void {
+    console.log('Cliente criado:', data);
+    // aqui é o create
+  }
 }

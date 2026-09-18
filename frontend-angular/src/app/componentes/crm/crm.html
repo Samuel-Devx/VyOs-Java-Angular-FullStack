@@ -18,10 +18,11 @@
 
   <ng-template #end>
     <button pButton severity="secondary" variant="outlined" size="small" label="Cancel">Cancel</button>
-    <button pButton severity="primary" size="small" label="Save" class="ml-2">Novo Cliente</button>
+    <button pButton severity="primary" size="small" label="Save" class="ml-2" pButton (click)="showCreateDialog.set(true)">Novo Cliente</button>
   </ng-template>
 </p-toolbar>
-
+ <app-client-dialog [(visible)]="showCreateDialog"
+  (create)="onClientCreate($event)"></app-client-dialog>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">
     @if (loading()) {
     <p>Carregando clientes...</p>

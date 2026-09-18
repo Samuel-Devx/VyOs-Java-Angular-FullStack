@@ -1,0 +1,27 @@
+<div class="flex justify-center">
+    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }" (onShow)="onShow()" (visibleChange)="visibleChange.emit($event)">
+        <ng-template #header>
+            <div class="inline-flex items-center justify-center gap-2">
+                <p-avatar image="perfil.png" shape="circle" />
+                <span class="font-bold whitespace-nowrap">Novo Cliente</span>
+            </div>
+        </ng-template>
+        <span class="text-surface-500 dark:text-surface-400 block mb-8 text-sm">Preencha os dados do cliente.</span>
+        <div class="flex items-center gap-4 mb-4">
+            <label for="username" class="font-semibold w-24 text-sm">Nome</label>
+            <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="data.username" />
+        </div>
+        <div class="flex items-center gap-4 mb-2">
+            <label for="number" class="font-semibold w-24 text-sm">Telefone</label>
+            <input pInputText id="number" class="flex-auto" autocomplete="off" [(ngModel)]="data.number" />
+        </div>
+        <div class="flex items-center gap-4 mb-4">
+            <label for="email" class="font-semibold w-24 text-sm">Email</label>
+            <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="data.email" />
+        </div>
+        <ng-template #footer>
+            <button type="button" pButton [text]="true" severity="secondary" (click)="onCancel()">Cancelar</button>
+            <button type="button" pButton [outlined]="true" severity="primary" (click)="onSave()">Salvar</button>
+        </ng-template>
+    </p-dialog>
+</div>
