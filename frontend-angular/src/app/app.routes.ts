@@ -13,8 +13,8 @@ export const routes: Routes = [
     loadComponent: () => import('./componentes/dashboard/dashboard').then((m) => m.Dashboard),
   },
   {
-    path: 'crm',
-    loadComponent: () => import('./componentes/crm/crm').then((m) => m.Crm),
+    path: 'contatos',
+    loadComponent: () => import('./componentes/contatos/contatos').then((m) => m.Crm),
   },
 
 

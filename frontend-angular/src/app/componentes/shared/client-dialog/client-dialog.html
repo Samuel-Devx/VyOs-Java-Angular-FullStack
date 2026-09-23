@@ -9,15 +9,15 @@
         <span class="text-surface-500 dark:text-surface-400 block mb-8 text-sm">Preencha os dados do cliente.</span>
         <div class="flex items-center gap-4 mb-4">
             <label for="username" class="font-semibold w-24 text-sm">Nome</label>
-            <input pInputText id="username" class="flex-auto" autocomplete="off" [(ngModel)]="data.username" />
+            <input pInputText id="username" class="flex-auto" autocomplete="off" placeholder="Nome" [(ngModel)]="data.name" />
         </div>
         <div class="flex items-center gap-4 mb-2">
             <label for="number" class="font-semibold w-24 text-sm">Telefone</label>
-            <input pInputText id="number" class="flex-auto" autocomplete="off" [(ngModel)]="data.number" />
+            <input pInputText pInputMask="(99) 99999-9999" id="number" class="flex-auto" autocomplete="off" placeholder="(99) 99999-9999" [(ngModel)]="data.phoneNumber" />
         </div>
         <div class="flex items-center gap-4 mb-4">
             <label for="email" class="font-semibold w-24 text-sm">Email</label>
-            <input pInputText id="email" class="flex-auto" autocomplete="off" [(ngModel)]="data.email" />
+            <input pInputText id="email" class="flex-auto" autocomplete="off" placeholder="Email" [(ngModel)]="data.email" />
         </div>
         <ng-template #footer>
             <button type="button" pButton [text]="true" severity="secondary" (click)="onCancel()">Cancelar</button>

@@ -1,4 +1,4 @@
-package com.vycode.vyos.crm.domain.Enum;
+package com.vycode.vyos.contatos.domain.Enum;
 
 public enum StatsEnum {
     Active,

@@ -1,4 +1,4 @@
-package com.vycode.vyos.crm.domain;
+package com.vycode.vyos.contatos.domain;
 
 import java.util.UUID;
 

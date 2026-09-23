@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Crm } from './crm';
+import { Crm } from './contatos';
 
 describe('Crm', () => {
   let component: Crm;

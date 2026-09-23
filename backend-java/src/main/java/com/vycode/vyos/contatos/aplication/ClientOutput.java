@@ -1,6 +1,6 @@
-package com.vycode.vyos.crm.aplication;
+package com.vycode.vyos.contatos.aplication;
 
-import com.vycode.vyos.crm.domain.Client;
+import com.vycode.vyos.contatos.domain.Client;
 
 public record ClientOutput(String id, String name, String email, String phoneNumber, String stats) {
     public static ClientOutput fromDomain(Client client) {

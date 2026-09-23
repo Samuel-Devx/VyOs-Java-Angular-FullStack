@@ -12,7 +12,9 @@ import { ClienteService } from '../../clientes/cliente-service';
 import { ICliente } from '../../clientes/icliente';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
-import { ClientData, ClientDialog } from '../shared/client-dialog/client-dialog';@Component({
+import { ClientDialog } from '../shared/client-dialog/client-dialog';
+import { IclienteRequest } from '../../clientes/icliente-request';
+@Component({
   standalone: true,
   imports: [
     ToolbarModule,
@@ -28,9 +30,9 @@ import { ClientData, ClientDialog } from '../shared/client-dialog/client-dialog'
     DialogModule,
     ClientDialog
 ],
-  selector: 'app-crm',
-  styleUrl: './crm.css',
-  templateUrl: './crm.html',
+  selector: 'app-contatos',
+  styleUrl: './contatos.css',
+  templateUrl: './contatos.html',
 })
 export class Crm {
 
@@ -52,8 +54,15 @@ export class Crm {
     },
   });
 }
- onClientCreate(data: ClientData): void {
-    console.log('Cliente criado:', data);
-    // aqui é o create
+ onClientCreate(data: IclienteRequest): void {
+    this.clientService.createCliente(data).subscribe({
+      next: (newClient) => {
+        this.clients.update((clients) => [...clients, newClient as ICliente]);
+        this.showCreateDialog.set(false);
+      },
+      error: (err) => {
+        console.error('Erro ao criar cliente:', err);
+      },
+    });
   }
 }

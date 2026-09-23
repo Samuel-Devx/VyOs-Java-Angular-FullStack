@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, Service } from '@angular/core';
+import { IclienteRequest } from './icliente-request';
 
 @Injectable({ providedIn: 'root' })
 export class ClienteService {
@@ -12,6 +13,10 @@ export class ClienteService {
 
   getClienteById(id: number) {
     return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+  createCliente(cliente: IclienteRequest) {
+    return this.http.post(this.apiUrl, cliente);
   }
 
 }

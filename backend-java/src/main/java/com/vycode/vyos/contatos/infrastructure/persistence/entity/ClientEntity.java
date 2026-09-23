@@ -1,8 +1,8 @@
-package com.vycode.vyos.crm.infrastructure.persistence.entity;
+package com.vycode.vyos.contatos.infrastructure.persistence.entity;
 
-import com.vycode.vyos.crm.domain.Client;
-import com.vycode.vyos.crm.domain.ClientId;
-import com.vycode.vyos.crm.domain.Enum.StatsEnum;
+import com.vycode.vyos.contatos.domain.Client;
+import com.vycode.vyos.contatos.domain.ClientId;
+import com.vycode.vyos.contatos.domain.Enum.StatsEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +26,7 @@ public class ClientEntity {
     @Enumerated(EnumType.STRING)
     private StatsEnum stats;
 
-    public static ClientEntity fromDomain(com.vycode.vyos.crm.domain.Client client) {
+    public static ClientEntity fromDomain(com.vycode.vyos.contatos.domain.Client client) {
         ClientEntity entity = new ClientEntity();
         entity.setId(client.getId().id());
         entity.setName(client.getName());

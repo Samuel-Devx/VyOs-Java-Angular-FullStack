@@ -1,10 +1,10 @@
-package com.vycode.vyos.crm.infrastructure.persistence.repository;
+package com.vycode.vyos.contatos.infrastructure.persistence.repository;
 
-import com.vycode.vyos.crm.domain.Client;
-import com.vycode.vyos.crm.domain.ClientId;
-import com.vycode.vyos.crm.domain.ClientRepository;
-import com.vycode.vyos.crm.domain.Enum.StatsEnum;
-import com.vycode.vyos.crm.infrastructure.persistence.entity.ClientEntity;
+import com.vycode.vyos.contatos.domain.Client;
+import com.vycode.vyos.contatos.domain.ClientId;
+import com.vycode.vyos.contatos.domain.ClientRepository;
+import com.vycode.vyos.contatos.domain.Enum.StatsEnum;
+import com.vycode.vyos.contatos.infrastructure.persistence.entity.ClientEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -41,5 +41,24 @@ public class JpaClientRepository implements ClientRepository {
     public Client findById(ClientId id) {
         var entity = repository.findById(id.id()).orElseThrow(() -> new RuntimeException("Client not found"));
         return entity.toClient();
+    }
+
+    @Override
+    public Client save(Client client) {
+        var entity = ClientEntity.fromDomain(client);
+        var savedEntity = repository.save(entity);
+        return savedEntity.toClient();
+    }
+
+    @Override
+    public void delete(ClientId id) {
+        repository.deleteById(id.id());
+    }
+
+    @Override
+    public Client update(Client client) {
+        var entity = ClientEntity.fromDomain(client);
+        var updatedEntity = repository.save(entity);
+        return updatedEntity.toClient();
     }
 }

@@ -1,6 +1,6 @@
-package com.vycode.vyos.crm.infrastructure.persistence.repository;
+package com.vycode.vyos.contatos.infrastructure.persistence.repository;
 
-import com.vycode.vyos.crm.infrastructure.persistence.entity.ClientEntity;
+import com.vycode.vyos.contatos.infrastructure.persistence.entity.ClientEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

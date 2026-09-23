@@ -1,6 +1,6 @@
-package com.vycode.vyos.crm.aplication;
+package com.vycode.vyos.contatos.aplication;
 
-import com.vycode.vyos.crm.domain.ClientRepository;
+import com.vycode.vyos.contatos.domain.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

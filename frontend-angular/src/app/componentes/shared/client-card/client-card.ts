@@ -1,10 +1,15 @@
 import { Component, input } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { Trash } from '@primeicons/angular/trash';
+import { Pencil } from '@primeicons/angular/pencil';
+import { AvatarModule } from 'primeng/avatar';
+import { DividerModule } from 'primeng/divider';
 @Component({
   imports: [
     CardModule,
-    Trash
+    Trash,
+    AvatarModule,
+    DividerModule
   ],
   selector: 'app-client-card',
   styleUrl: './client-card.css',
@@ -16,6 +21,10 @@ export class ClientCard {
   email = input.required<string>();
   number = input.required<string>();
   status = input<'Active' | 'Inactive'>('Active');
+
+  initials(){
+    return this.name().split(' ').map(n => n[0]).join('').toUpperCase();
+  }
 
   statusClasses(){
     const map: Record<string, string> = {

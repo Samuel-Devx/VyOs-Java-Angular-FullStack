@@ -5,15 +5,12 @@ import { DialogModule } from 'primeng/dialog';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { IclienteRequest } from '../../../clientes/icliente-request';
+import { InputMaskModule } from 'primeng/inputmask';
 
-export interface ClientData {
-  username: string;
-  number: string;
-  email: string;
-}
-const EMPTY_CLIENT: ClientData = { username: '', number: '', email: '' };
+const EMPTY_CLIENT: IclienteRequest = { name: '', email: '', phoneNumber: '' };
 @Component({
-  imports: [CommonModule, FormsModule, DialogModule, AvatarModule, InputTextModule, ButtonModule],
+  imports: [CommonModule, FormsModule, DialogModule, AvatarModule, InputTextModule, ButtonModule, InputMaskModule],
   selector: 'app-client-dialog',
   styleUrl: './client-dialog.css',
   templateUrl: './client-dialog.html',
@@ -23,9 +20,9 @@ export class ClientDialog {
   @Input() mode: 'create' | 'edit' = 'create';
 
   @Output() visibleChange = new EventEmitter<boolean>();
-  @Output() create = new EventEmitter<ClientData>();
+  @Output() create = new EventEmitter<IclienteRequest>();
 
-  data: ClientData = { ...EMPTY_CLIENT };
+  data: IclienteRequest = { ...EMPTY_CLIENT };
 
   onShow(): void {
     if (this.mode === 'create') {
