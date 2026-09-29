@@ -5,9 +5,12 @@ import com.vycode.vyos.contatos.domain.ClientId;
 import com.vycode.vyos.contatos.domain.ClientRepository;
 import com.vycode.vyos.contatos.domain.Enum.StatsEnum;
 import com.vycode.vyos.contatos.infrastructure.persistence.entity.ClientEntity;
+import com.vycode.vyos.exception.ContactNotFound;
+import com.vycode.vyos.exception.ErrorCode;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 @Repository
@@ -38,9 +41,9 @@ public class JpaClientRepository implements ClientRepository {
     }
 
     @Override
-    public Client findById(ClientId id) {
-        var entity = repository.findById(id.id()).orElseThrow(() -> new RuntimeException("Client not found"));
-        return entity.toClient();
+    public Optional<Client> findById(ClientId id) {
+        return repository.findById(id.id())
+                .map(ClientEntity::toClient);
     }
 
     @Override

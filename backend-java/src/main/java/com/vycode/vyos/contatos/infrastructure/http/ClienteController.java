@@ -1,9 +1,6 @@
 package com.vycode.vyos.contatos.infrastructure.http;
 
-import com.vycode.vyos.contatos.aplication.ClientOutput;
-import com.vycode.vyos.contatos.aplication.CreateClientUseCase;
-import com.vycode.vyos.contatos.aplication.DeleteClientUseCase;
-import com.vycode.vyos.contatos.aplication.ListAllCLientUseCase;
+import com.vycode.vyos.contatos.aplication.*;
 import com.vycode.vyos.contatos.domain.ClientId;
 import com.vycode.vyos.contatos.infrastructure.http.Response.ClientResponse;
 import com.vycode.vyos.contatos.infrastructure.http.request.ClientRequest;
@@ -23,6 +20,7 @@ public class ClienteController {
     private final ListAllCLientUseCase listAllCLientUseCase;
     private final CreateClientUseCase createClientUseCase;
     private final DeleteClientUseCase deleteClientUseCase;
+    private final UpdateClientUseCase updateClientUseCase;
     @GetMapping
     public ResponseEntity<List<ClientOutput>> listAll() {
         return ResponseEntity.ok(listAllCLientUseCase.execute());
@@ -41,8 +39,9 @@ public class ClienteController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ClientResponse> updateClient(@PathVariable UUID id, @RequestBody ClientRequest request) {
-
+    public ResponseEntity<ClientResponse> updateClient(
+            @PathVariable UUID id, @RequestBody ClientRequest request) {
+        var output = updateClientUseCase.execute(new ClientId(id), request.toInput());
+        return ResponseEntity.ok(ClientResponse.from(output));
     }
-
 }
