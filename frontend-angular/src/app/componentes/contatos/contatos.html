@@ -1,3 +1,6 @@
+<p-toast />
+<p-confirmpopup />
+
 <p-toolbar>
   <ng-template #start>
     <button
@@ -17,20 +20,42 @@
   </ng-template>
 
   <ng-template #end>
-    <button pButton severity="secondary" variant="outlined" size="small" label="Cancel">Cancel</button>
-    <button pButton severity="primary" size="small" label="Save" class="ml-2" pButton (click)="showCreateDialog.set(true)">Novo Cliente</button>
+    <button pButton severity="primary" size="small" (click)="showCreateDialog.set(true)">
+      <i class="pi pi-plus"></i>
+      <span>Novo Cliente</span>
+    </button>
   </ng-template>
 </p-toolbar>
- <app-client-dialog [(visible)]="showCreateDialog"
-  (create)="onClientCreate($event)"></app-client-dialog>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">
-    @if (loading()) {
-    <p>Carregando clientes...</p>
-  } @else {
+
+<app-client-dialog
+  [(visible)]="showCreateDialog"
+  (create)="onClientCreate($event)"
+></app-client-dialog>
+
+@if (loading()) {
+  <p class="mt-3">Carregando clientes...</p>
+} @else if (clients().length === 0) {
+  <div class="flex flex-col items-center justify-center text-center gap-3 py-16 mt-3">
+    <i class="pi pi-users text-5xl text-surface-400"></i>
+    <h3 class="text-xl font-semibold m-0">Nenhum contato ainda</h3>
+    <p class="text-surface-500 m-0">
+      Você ainda não cadastrou nenhum contato. Comece adicionando o primeiro.
+    </p>
+    <button pButton severity="primary" (click)="showCreateDialog.set(true)">
+      <i class="pi pi-plus"></i>
+      <span>Criar primeiro contato</span>
+    </button>
+  </div>
+} @else {
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">
     @for (client of clients(); track client.id) {
       <app-client-card
-       [name]="client.name" [number]="client.phoneNumber" [email]="client.email" [status]="client.stats"
-      ></app-client-card>
+        [id]="client.id"
+        [name]="client.name"
+        [number]="client.phoneNumber"
+        [email]="client.email"
+        [status]="client.stats"
+        (deleted)="onDeleted($event)" />
     }
-  }
-</div>
+  </div>
+}

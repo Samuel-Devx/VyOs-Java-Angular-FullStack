@@ -38,6 +38,7 @@
         <button
           type="button"
           class="group relative flex items-center justify-center h-10 w-10 rounded-xl bg-red-500 hover:bg-primary-emphasis text-primary-contrast hover:shadow-xl hover:shadow-primary-500/40 hover:scale-105 active:scale-95 transition-all duration-200 m-3 cursor-pointer"
+          (click)="confirmDelete($event)"
         >
           <svg data-p-icon="trash" class="h-4 w-4 text-white transition-transform duration-200" />
         </button>

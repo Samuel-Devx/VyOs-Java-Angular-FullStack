@@ -18,5 +18,8 @@ export class ClienteService {
   createCliente(cliente: IclienteRequest) {
     return this.http.post(this.apiUrl, cliente);
   }
+  delete(id: string) {
+  return this.http.delete<void>(`${this.apiUrl}/${id}`);
+}
 
 }
