@@ -5,6 +5,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ClienteService } from '../../../clientes/cliente-service';
+import { ServiceNotification } from '../toast/service-notification';
 
 @Component({
   selector: 'app-client-card',
@@ -18,13 +19,13 @@ export class ClientCard {
   email = input.required<string>();
   number = input.required<string>();
   status = input<'Active' | 'Inactive'>('Active');
-
+  edit = output<void>();
   deleted = output<string>();
 
   private confirmationService = inject(ConfirmationService);
   private messageService = inject(MessageService);
   private clientService = inject(ClienteService);
-
+  private notify = inject(ServiceNotification);
   initials() {
     return this.name().split(' ').map(n => n[0]).join('').toUpperCase();
   }
@@ -51,21 +52,11 @@ export class ClientCard {
   private deleteClient() {
     this.clientService.delete(this.id()).subscribe({
       next: () => {
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Contato excluído',
-          life: 3000,
-        });
+        this.notify.success('Contato excluído', 'Sucesso');
         this.deleted.emit(this.id());
       },
       error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: err.error?.message ?? 'Não foi possível excluir o contato',
-          life: 4000,
-        });
+        this.notify.error('Erro ao excluir contato', err.error?.message ?? 'Não foi possível excluir o contato');
       },
     });
   }

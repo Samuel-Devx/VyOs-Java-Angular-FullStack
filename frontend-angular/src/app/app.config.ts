@@ -1,11 +1,14 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { routes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
-import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeuix/themes/aura';;
-import { definePreset } from '@primeuix/themes';
 import { provideHttpClient } from '@angular/common/http';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
+import { definePreset } from '@primeuix/themes';
+import { routes } from './app.routes';
+import { MessageService } from 'primeng/api';
+
+
 const VyCodePreset = definePreset(Aura, {
   primitive: {
     violet: {
@@ -21,7 +24,6 @@ const VyCodePreset = definePreset(Aura, {
       900: '#2D0066',
       950: '#180033'
     },
-
     green: {
       50: '#E9FFE5',
       100: '#C9FFC0',
@@ -36,7 +38,6 @@ const VyCodePreset = definePreset(Aura, {
       950: '#082E03'
     }
   },
-
   semantic: {
     primary: {
       50: '{violet.50}',
@@ -50,19 +51,38 @@ const VyCodePreset = definePreset(Aura, {
       800: '{violet.800}',
       900: '{violet.900}',
       950: '{violet.950}'
+    },
+    colorScheme: {
+      light: {
+        primary: {
+          color: '{violet.600}',
+          hoverColor: '{violet.700}',
+          activeColor: '{violet.800}'
+        }
+      },
+      dark: {
+        primary: {
+          color: '{violet.400}',
+          hoverColor: '{violet.300}',
+          activeColor: '{violet.200}'
+        }
+      }
     }
   }
-})
+});
+
 export const appConfig: ApplicationConfig = {
   providers: [
+    MessageService,
     provideHttpClient(),
-        providePrimeNG({
-            theme: {
-                preset: VyCodePreset
-            },
-        }),
+    providePrimeNG({
+      theme: {
+        preset: VyCodePreset,
+        options: { darkModeSelector: '.app-dark' }
+      }
+    }),
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes), provideClientHydration()
+    provideRouter(routes),
+    provideClientHydration()
   ]
 };
-

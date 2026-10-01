@@ -38,7 +38,7 @@ public class ClienteController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ClientResponse> updateClient(
             @PathVariable UUID id, @RequestBody ClientRequest request) {
         var output = updateClientUseCase.execute(new ClientId(id), request.toInput());

@@ -17,6 +17,8 @@ import { SidebarService } from '../sidebar/sidebar-service';
 import { ClienteService } from '../../clientes/cliente-service';
 import { ICliente } from '../../clientes/icliente';
 import { IclienteRequest } from '../../clientes/icliente-request';
+import { ServiceNotification } from '../shared/toast/service-notification';
+
 
 @Component({
   standalone: true,
@@ -44,12 +46,15 @@ export class Crm implements OnInit {
   private messageService = inject(MessageService);
   private clientService = inject(ClienteService);
   sidebarService = inject(SidebarService);
+  private notify = inject(ServiceNotification);
 
   showCreateDialog = signal(false);
   clients = signal<ICliente[]>([]);
   loading = signal(true);
 
-
+  dialogVisible = false;
+  dialogMode: 'create' | 'edit' = 'create';
+  selectedClient: ICliente | null = null;
 
   ngOnInit(): void {
     this.onClientLoad();
@@ -67,31 +72,39 @@ export class Crm implements OnInit {
         }
       },
       error: (err) => {
-        console.error('Erro ao buscar clientes:', err);
+        this.notify.error('Erro ao buscar clientes', 'Erro');
         this.loading.set(false);
       },
     });
   }
+  openCreate(): void {
+    this.dialogMode = 'create';
+    this.selectedClient = null;
+    this.showCreateDialog.set(true);
+  }
+
+  openEdit(cliente: ICliente) {
+    this.dialogMode = 'edit';
+    this.selectedClient = cliente;
+    this.showCreateDialog.set(true);
+  }
+ onSaveClient(data: IclienteRequest): void {
+  if (this.dialogMode === 'edit' && this.selectedClient) {
+    this.onClientUpdate(this.selectedClient.id, data);
+  } else {
+    this.onClientCreate(data);
+  }
+}
 
   onClientCreate(data: IclienteRequest): void {
     this.clientService.createCliente(data).subscribe({
       next: (newClient) => {
         this.clients.update((list) => [...list, newClient as ICliente]);
+        this.notify.success('Contato criado', 'Sucesso');
         this.showCreateDialog.set(false);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Sucesso',
-          detail: 'Contato criado',
-          life: 3000,
-        });
       },
       error: (err) => {
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: err.error?.message ?? 'Não foi possível criar o contato',
-          life: 4000,
-        });
+        this.notify.error('Erro ao criar contato', err.error?.message ?? 'Não foi possível criar o contato');
       },
     });
   }
@@ -99,4 +112,14 @@ export class Crm implements OnInit {
   onDeleted(id: string) {
     this.clients.update((list) => list.filter((c) => c.id !== id));
   }
+  onClientUpdate(id: string, data: IclienteRequest): void {
+  this.clientService.update(id, data).subscribe({
+    next: (updated) => {
+      this.clients.update((list) => list.map((c) => (c.id === id ? updated : c)));
+      this.notify.success('Contato atualizado', 'Sucesso');
+    },
+    error: (err) => {
+      this.notify.error('Erro ao atualizar contato', err.error?.message ?? 'Não foi possível atualizar o contato');
+    },
+  });}
 }

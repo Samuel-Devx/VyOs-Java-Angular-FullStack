@@ -1,27 +1,83 @@
-<div class="flex justify-center">
-    <p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }" (onShow)="onShow()" (visibleChange)="visibleChange.emit($event)">
-        <ng-template #header>
-            <div class="inline-flex items-center justify-center gap-2">
-                <p-avatar image="perfil.png" shape="circle" />
-                <span class="font-bold whitespace-nowrap">Novo Cliente</span>
-            </div>
-        </ng-template>
-        <span class="text-surface-500 dark:text-surface-400 block mb-8 text-sm">Preencha os dados do cliente.</span>
-        <div class="flex items-center gap-4 mb-4">
-            <label for="username" class="font-semibold w-24 text-sm">Nome</label>
-            <input pInputText id="username" class="flex-auto" autocomplete="off" placeholder="Nome" [(ngModel)]="data.name" />
-        </div>
-        <div class="flex items-center gap-4 mb-2">
-            <label for="number" class="font-semibold w-24 text-sm">Telefone</label>
-            <input pInputText pInputMask="(99) 99999-9999" id="number" class="flex-auto" autocomplete="off" placeholder="(99) 99999-9999" [(ngModel)]="data.phoneNumber" />
-        </div>
-        <div class="flex items-center gap-4 mb-4">
-            <label for="email" class="font-semibold w-24 text-sm">Email</label>
-            <input pInputText id="email" class="flex-auto" autocomplete="off" placeholder="Email" [(ngModel)]="data.email" />
-        </div>
-        <ng-template #footer>
-            <button type="button" pButton [text]="true" severity="secondary" (click)="onCancel()">Cancelar</button>
-            <button type="button" pButton [outlined]="true" severity="primary" (click)="onSave()">Salvar</button>
-        </ng-template>
-    </p-dialog>
+<div class="flex justify-center" ngForm #form="ngForm">
+  <p-dialog
+    [visible]="visible"
+    [modal]="true"
+    [style]="{ width: '25rem' }"
+    (onShow)="onShow()"
+    (visibleChange)="visibleChange.emit($event)"
+  >
+    <ng-template #header>
+      <div class="inline-flex items-center justify-center gap-2">
+        <p-avatar image="perfil.png" shape="circle" />
+        <span class="font-bold whitespace-nowrap">{{ title }}</span>
+      </div>
+    </ng-template>
+
+    <span class="text-surface-500 dark:text-surface-400 block mb-8 text-sm">
+      Preencha os dados do cliente.
+    </span>
+
+    <div class="mb-4">
+      <div class="flex items-center gap-4">
+        <label for="username" class="font-semibold w-24 text-sm">Nome</label>
+        <input
+          pInputText id="username" name="name" class="flex-auto" autocomplete="off"
+          placeholder="Nome" [(ngModel)]="data.name" #name="ngModel"
+          required minlength="3"
+          [class.ng-dirty]="submitted"
+        />
+      </div>
+      @if (name.invalid && (name.touched || submitted)) {
+        <small class="text-red-500 block ml-28 mt-1">
+          @if (name.errors?.['required']) { Informe o nome. }
+          @else if (name.errors?.['minlength']) { Mínimo de 3 caracteres. }
+        </small>
+      }
+    </div>
+
+    <div class="mb-4">
+      <div class="flex items-center gap-4">
+        <label for="number" class="font-semibold w-24 text-sm">Telefone</label>
+        <input
+          pInputText pInputMask="(99) 99999-9999" id="number" name="phoneNumber"
+          class="flex-auto" autocomplete="off" placeholder="(99) 99999-9999"
+          [(ngModel)]="data.phoneNumber" #phone="ngModel"
+          required [pattern]="phonePattern"
+          [class.ng-dirty]="submitted"
+        />
+      </div>
+      @if (phone.invalid && (phone.touched || submitted)) {
+        <small class="text-red-500 block ml-28 mt-1">
+          @if (phone.errors?.['required']) { Informe o telefone. }
+          @else if (phone.errors?.['pattern']) { Telefone incompleto. }
+        </small>
+      }
+    </div>
+
+
+    <div class="mb-4">
+      <div class="flex items-center gap-4">
+        <label for="email" class="font-semibold w-24 text-sm">Email</label>
+        <input
+          pInputText id="email" name="email" type="email" class="flex-auto"
+          autocomplete="off" placeholder="Email" [(ngModel)]="data.email"
+          #email="ngModel" required email
+          [class.ng-dirty]="submitted"
+        />
+      </div>
+      @if (email.invalid && (email.touched || submitted)) {
+        <small class="text-red-500 block ml-28 mt-1">
+          @if (email.errors?.['required']) { Informe o email. }
+          @else if (email.errors?.['email']) { Email inválido. }
+        </small>
+      }
+    </div>
+
+    <ng-template #footer>
+      <button type="button" pButton [text]="true" severity="secondary" (click)="onCancel()">Cancelar</button>
+      <button type="button" pButton [outlined]="true" severity="primary" (click)="onSave(form)">
+        {{ mode === 'edit' ? 'Atualizar' : 'Salvar' }}
+      </button>
+    </ng-template>
+  </p-dialog>
 </div>
