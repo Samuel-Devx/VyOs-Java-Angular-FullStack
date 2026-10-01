@@ -48,7 +48,7 @@ Também fazem parte do projeto:
 
 O backend é dividido em quatro camadas, com as dependências apontando sempre para o domínio:
 
-![Arquitetura do backend VyOS](Arch/Arch-Backend.png.png)
+![Arquitetura do backend VyOS](Arch/Arch-Backend.png)
 
 | Camada | Responsabilidade |
 |---|---|
