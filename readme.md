@@ -189,8 +189,8 @@ O projeto é de uso interno e está em fase inicial, mas sugestões e feedbacks 
 **Samuel Duarte Alves** (SamukaDev)
 Desenvolvedor backend
 
-[![GitHub](https://img.shields.io/badge/GitHub-Samuel--Devx-181717?logo=github)](https://github.com/Samuel-Devx)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-samuelduartealves-0A66C2)](https://www.linkedin.com/in/samuelduartealves)
+- GitHub: [@Samuel-Devx](https://github.com/Samuel-Devx)
+- LinkedIn: [samuelduartealves](https://www.linkedin.com/in/samuelduartealves)
 
 ---
 
