@@ -1,12 +1,13 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideClientHydration } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
 import { routes } from './app.routes';
 import { MessageService } from 'primeng/api';
+import { loadingInterceptor } from './componentes/shared/loading/loading-interceptor-interceptor';
 
 
 const VyCodePreset = definePreset(Aura, {
@@ -83,6 +84,8 @@ export const appConfig: ApplicationConfig = {
     }),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withInterceptors([loadingInterceptor])),
   ]
+
 };

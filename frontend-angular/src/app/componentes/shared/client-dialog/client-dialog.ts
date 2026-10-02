@@ -27,9 +27,7 @@ export class ClientDialog {
   data: IclienteRequest = { ...EMPTY_CLIENT };
   submitted = false;
 
-
-  readonly phonePattern = /^\(\d{2}\) \d{5}-\d{4}$/;
-
+  readonly phonePattern = '^\\d{10,11}$';
   get title(): string {
     return this.mode === 'edit' ? 'Editar Cliente' : 'Novo Cliente';
   }
@@ -38,7 +36,7 @@ export class ClientDialog {
     this.submitted = false;
     this.data =
       this.mode === 'edit' && this.client
-        ? { ...this.client }
+        ? { ...this.client, phoneNumber: this.onlyDigits(this.client.phoneNumber) }
         : { ...EMPTY_CLIENT };
   }
 
@@ -50,8 +48,15 @@ export class ClientDialog {
     this.submitted = true;
     if (form.invalid) return;
 
-    this.save.emit({ ...this.data });
+    this.save.emit({
+      ...this.data,
+      phoneNumber: this.onlyDigits(this.data.phoneNumber),
+    });
     this.close();
+  }
+
+  private onlyDigits(value: string | null | undefined): string {
+    return (value ?? '').replace(/\D/g, '');
   }
 
   private close(): void {

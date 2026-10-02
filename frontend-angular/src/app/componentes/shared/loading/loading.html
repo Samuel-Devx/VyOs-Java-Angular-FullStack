@@ -1,0 +1,14 @@
+@if (loading.isLoading()) {
+      <div
+        class="fixed inset-0 z-[9999] flex items-center justify-center
+               bg-surface-0/70 dark:bg-surface-950/70 backdrop-blur-sm"
+      >
+        <p-progress-spinner
+          strokeWidth="5"
+          fill="transparent"
+          animationDuration=".8s"
+          ariaLabel="Carregando"
+          [style]="{ width: '50px', height: '50px' }"
+        />
+      </div>
+    }

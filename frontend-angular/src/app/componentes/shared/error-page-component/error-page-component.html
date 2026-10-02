@@ -1,0 +1,29 @@
+<div class="error-wrapper min-h-screen flex items-center justify-center p-6">
+  <div class="error-card text-center max-w-xl w-full">
+    <!-- ícone flutuante -->
+    <div class="icon-bubble mx-auto mb-6">
+      <i class="pi {{ icon }}"></i>
+    </div>
+
+    <!-- código gigante com gradiente -->
+    <h1 class="error-code">{{ code }}</h1>
+
+    <h2 class="text-2xl md:text-3xl font-semibold mt-2 mb-3 title">
+      {{ title }}
+    </h2>
+
+    <p class="message mb-8 leading-relaxed">
+      {{ message }}
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <button pButton (click)="goHome()">
+        <i class="pi pi-home"></i> Voltar ao início
+      </button>
+
+      <button pButton severity="secondary" [outlined]="true" (click)="goBack()">
+        <i class="pi pi-arrow-left"></i> Página anterior
+      </button>
+    </div>
+  </div>
+</div>
