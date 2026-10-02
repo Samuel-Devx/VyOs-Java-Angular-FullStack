@@ -36,6 +36,6 @@ public class GlobalExceptionHandler {
                 "Erro interno. Tente novamente mais tarde.", req.getRequestURI(), null);
         return ResponseEntity.internalServerError().body(body);
     }
-   
+
 
 }
