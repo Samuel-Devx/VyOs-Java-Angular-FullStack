@@ -32,6 +32,15 @@ public class JpaClientRepository implements ClientRepository {
     }
 
     @Override
+    public List<Client> search(String term) {
+        var entities = repository.search(term);
+        return StreamSupport
+                .stream(entities.spliterator(), false)
+                .map(ClientEntity::toClient)
+                .toList();
+    }
+
+    @Override
     public List<Client> findByStats(StatsEnum stats) {
         var entities = repository.findByStats(stats.name());
         return StreamSupport
@@ -39,6 +48,8 @@ public class JpaClientRepository implements ClientRepository {
                 .map(ClientEntity::toClient)
                 .toList();
     }
+
+
 
     @Override
     public Optional<Client> findById(ClientId id) {

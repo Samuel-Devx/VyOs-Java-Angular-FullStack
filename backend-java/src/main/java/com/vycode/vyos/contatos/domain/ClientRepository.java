@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface ClientRepository {
 
-
     List<Client> findAll();
+    List<Client> search(String term);
     List<Client> findByStats(StatsEnum stats);
     Optional<Client> findById(ClientId id);
     Client save(Client client);

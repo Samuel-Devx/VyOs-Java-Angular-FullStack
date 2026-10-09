@@ -22,8 +22,8 @@ public class ClienteController {
     private final DeleteClientUseCase deleteClientUseCase;
     private final UpdateClientUseCase updateClientUseCase;
     @GetMapping
-    public ResponseEntity<List<ClientOutput>> listAll() {
-        return ResponseEntity.ok(listAllCLientUseCase.execute());
+    public ResponseEntity<List<ClientOutput>> listAll(@RequestParam(required = false) String term) {
+        return ResponseEntity.ok(listAllCLientUseCase.execute(term));
     }
     @PostMapping
     public ResponseEntity<ClientResponse>createClient(@RequestBody ClientRequest request) {

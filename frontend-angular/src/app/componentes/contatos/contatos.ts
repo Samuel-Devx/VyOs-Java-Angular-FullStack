@@ -1,4 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { catchError, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { CardModule } from 'primeng/card';
 import { ToolbarModule } from 'primeng/toolbar';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -19,10 +22,10 @@ import { ICliente } from '../../clientes/icliente';
 import { IclienteRequest } from '../../clientes/icliente-request';
 import { ServiceNotification } from '../shared/toast/service-notification';
 
-
 @Component({
   standalone: true,
   imports: [
+    ReactiveFormsModule,
     ToolbarModule,
     CardModule,
     IconFieldModule,
@@ -56,6 +59,33 @@ export class Crm implements OnInit {
   dialogMode: 'create' | 'edit' = 'create';
   selectedClient: ICliente | null = null;
 
+  searchControl = new FormControl('', { nonNullable: true });
+  activeSearch = signal('');
+
+  constructor() {
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        map((value) => value.trim()),
+        distinctUntilChanged(),
+        switchMap((term) =>
+          this.clientService.getClientes(term).pipe(
+            map((data) => ({ term, list: (data as ICliente[]) ?? [] })),
+            catchError(() => {
+              this.notify.error('Erro ao buscar clientes', 'Erro');
+              return of(null);
+            }),
+          ),
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe((result) => {
+        if (!result) return;
+        this.clients.set(result.list);
+        this.activeSearch.set(result.term);
+      });
+  }
+
   ngOnInit(): void {
     this.onClientLoad();
   }
@@ -77,6 +107,7 @@ export class Crm implements OnInit {
       },
     });
   }
+
   openCreate(): void {
     this.dialogMode = 'create';
     this.selectedClient = null;
@@ -88,13 +119,14 @@ export class Crm implements OnInit {
     this.selectedClient = cliente;
     this.showCreateDialog.set(true);
   }
- onSaveClient(data: IclienteRequest): void {
-  if (this.dialogMode === 'edit' && this.selectedClient) {
-    this.onClientUpdate(this.selectedClient.id, data);
-  } else {
-    this.onClientCreate(data);
+
+  onSaveClient(data: IclienteRequest): void {
+    if (this.dialogMode === 'edit' && this.selectedClient) {
+      this.onClientUpdate(this.selectedClient.id, data);
+    } else {
+      this.onClientCreate(data);
+    }
   }
-}
 
   onClientCreate(data: IclienteRequest): void {
     this.clientService.createCliente(data).subscribe({
@@ -102,9 +134,15 @@ export class Crm implements OnInit {
         this.clients.update((list) => [...list, newClient as ICliente]);
         this.notify.success('Contato criado', 'Sucesso');
         this.showCreateDialog.set(false);
+        if (this.activeSearch()) {
+          this.searchControl.setValue('');
+        }
       },
       error: (err) => {
-        this.notify.error('Erro ao criar contato', err.error?.message ?? 'Não foi possível criar o contato');
+        this.notify.error(
+          'Erro ao criar contato',
+          err.error?.message ?? 'Não foi possível criar o contato',
+        );
       },
     });
   }
@@ -112,14 +150,19 @@ export class Crm implements OnInit {
   onDeleted(id: string) {
     this.clients.update((list) => list.filter((c) => c.id !== id));
   }
+
   onClientUpdate(id: string, data: IclienteRequest): void {
-  this.clientService.update(id, data).subscribe({
-    next: (updated) => {
-      this.clients.update((list) => list.map((c) => (c.id === id ? updated : c)));
-      this.notify.success('Contato atualizado', 'Sucesso');
-    },
-    error: (err) => {
-      this.notify.error('Erro ao atualizar contato', err.error?.message ?? 'Não foi possível atualizar o contato');
-    },
-  });}
+    this.clientService.update(id, data).subscribe({
+      next: (updated) => {
+        this.clients.update((list) => list.map((c) => (c.id === id ? updated : c)));
+        this.notify.success('Contato atualizado', 'Sucesso');
+      },
+      error: (err) => {
+        this.notify.error(
+          'Erro ao atualizar contato',
+          err.error?.message ?? 'Não foi possível atualizar o contato',
+        );
+      },
+    });
+  }
 }

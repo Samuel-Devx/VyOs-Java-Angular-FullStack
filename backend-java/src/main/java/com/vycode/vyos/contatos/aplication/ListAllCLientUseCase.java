@@ -13,11 +13,13 @@ public class ListAllCLientUseCase {
         this.clientRepository = clientRepository;
     }
 
-    public List<ClientOutput> execute() {
-        return clientRepository.findAll().stream()
+    public List<ClientOutput> execute(String term) {
+        var clients = (term == null || term.isBlank())
+                ? clientRepository.findAll()
+                : clientRepository.search(term.trim());
+
+        return clients.stream()
                 .map(ClientOutput::fromDomain)
                 .toList();
     }
-
-
 }

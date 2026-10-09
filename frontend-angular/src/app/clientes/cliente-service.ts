@@ -8,7 +8,10 @@ export class ClienteService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:8080/api/clientes';
 
-  getClientes() {
+  getClientes(term?: string) {
+    if (term) {
+      return this.http.get(`${this.apiUrl}?term=${term}`);
+    }
     return this.http.get(this.apiUrl);
   }
 
