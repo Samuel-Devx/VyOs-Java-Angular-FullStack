@@ -15,7 +15,7 @@
     <div class="mb-4">
       <div class="flex items-center gap-4">
         <label for="username" class="font-semibold w-24 text-sm">Nome</label>
-        <input pInputText id="username" name="name" class="flex-auto" autocomplete="off" placeholder="Nome"
+        <input pInputText id="username" maxlength="100" name="name" class="flex-auto" autocomplete="off" placeholder="Nome"
           [(ngModel)]="data.name" #name="ngModel" required minlength="3" [class.ng-dirty]="submitted" />
       </div>
       @if (name.invalid && (name.touched || submitted)) {
