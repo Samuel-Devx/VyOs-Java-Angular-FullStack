@@ -33,16 +33,16 @@ public class CreateClientUseCaseTest {
         var input = ClientFixture.input();
         when(clientRepository.save(any(Client.class))).thenAnswer(inv -> inv.getArgument(0));
 
-        ClientOutput output = createClientUseCase.execute(input); // ADAPTAR: nome do método
+        ClientOutput output = createClientUseCase.execute(input);
 
         ArgumentCaptor<Client> captor = ArgumentCaptor.forClass(Client.class);
         verify(clientRepository).save(captor.capture());
 
         Client saved = captor.getValue();
-        assertThat(saved.getName()).isEqualTo(input.name());     // ADAPTAR
-        assertThat(saved.getEmail()).isEqualTo(input.email());   // ADAPTAR
+        assertThat(saved.getName()).isEqualTo(input.name());
+        assertThat(saved.getEmail()).isEqualTo(input.email());
         assertThat(output).isNotNull();
-        assertThat(output.name()).isEqualTo(input.name());       // ADAPTAR
+        assertThat(output.name()).isEqualTo(input.name());
     }
 
 }
