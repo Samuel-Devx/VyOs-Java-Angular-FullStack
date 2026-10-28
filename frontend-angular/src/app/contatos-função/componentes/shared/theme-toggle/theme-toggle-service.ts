@@ -19,10 +19,8 @@ export class ThemeToggleService {
   }
 
   private initial(): boolean {
-    if (!this.isBrowser) return false;
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (!this.isBrowser) return true;
+    return localStorage.getItem('theme') !== 'light';
   }
 
   private apply() {

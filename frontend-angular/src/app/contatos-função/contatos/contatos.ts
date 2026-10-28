@@ -14,13 +14,13 @@ import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Bars } from '@primeicons/angular/bars';
-import { ClientCard } from '../shared/client-card/client-card';
-import { ClientDialog } from '../shared/client-dialog/client-dialog';
-import { SidebarService } from '../sidebar/sidebar-service';
+import { ClientCard } from '../componentes/shared/client-card/client-card';
+import { ClientDialog } from '../componentes/shared/client-dialog/client-dialog';
+import { SidebarService } from '../componentes/sidebar/sidebar-service';
 import { ClienteService } from '../../clientes/cliente-service';
 import { ICliente } from '../../clientes/icliente';
 import { IclienteRequest } from '../../clientes/icliente-request';
-import { ServiceNotification } from '../shared/toast/service-notification';
+import { ServiceNotification } from '../componentes/shared/toast/service-notification';
 
 @Component({
   standalone: true,

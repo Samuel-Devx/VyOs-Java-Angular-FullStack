@@ -1,6 +1,6 @@
 <div class="flex justify-start items-center gap-2">
-  <p-drawer #drawerRef [(visible)]="sidebarService.visible">
-    <ng-template #headless let-closeCallback="closeCallback">
+  <p-drawer [(visible)]="sidebarService.visible">
+    <ng-template #headless>
       <div class="flex flex-col h-full">
         <div class="flex items-center justify-between px-5 pt-3 shrink-0">
           <span class="inline-flex items-center gap-2">
@@ -8,8 +8,10 @@
             <span class="font-semibold text-xl text-primary">VyOs</span>
           </span>
           <span>
-            <button type="button" pButton iconOnly (click)="closeCallback($event)"
-              [rounded]="true" [outlined]="true" class="h-8 w-8">
+            <button type="button" pButton iconOnly
+              (click)="sidebarService.close()"
+              [rounded]="true" [outlined]="true" class="h-8 w-8"
+              aria-label="Fechar menu">
               <svg data-p-icon="times" />
             </button>
           </span>

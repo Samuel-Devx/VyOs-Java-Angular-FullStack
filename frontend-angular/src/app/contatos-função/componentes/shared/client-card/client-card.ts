@@ -4,7 +4,7 @@ import { Trash } from '@primeicons/angular/trash';
 import { AvatarModule } from 'primeng/avatar';
 import { DividerModule } from 'primeng/divider';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ClienteService } from '../../../clientes/cliente-service';
+import { ClienteService } from '../../../../clientes/cliente-service';
 import { ServiceNotification } from '../toast/service-notification';
 
 @Component({

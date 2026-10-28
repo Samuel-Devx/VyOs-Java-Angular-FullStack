@@ -1,4 +1,9 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -7,8 +12,8 @@ import Aura from '@primeuix/themes/aura';
 import { definePreset } from '@primeuix/themes';
 import { routes } from './app.routes';
 import { MessageService } from 'primeng/api';
-import { loadingInterceptor } from './componentes/shared/loading/loading-interceptor-interceptor';
-
+import { loadingInterceptor } from './contatos-função/componentes/shared/loading/loading-interceptor-interceptor';
+import { ThemeToggleService } from './contatos-função/componentes/shared/theme-toggle/theme-toggle-service';
 
 const VyCodePreset = definePreset(Aura, {
   primitive: {
@@ -74,8 +79,11 @@ const VyCodePreset = definePreset(Aura, {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAppInitializer(() => {
+      inject(ThemeToggleService);
+    }),
     MessageService,
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([loadingInterceptor])),
     providePrimeNG({
       theme: {
         preset: VyCodePreset,
@@ -85,7 +93,5 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideClientHydration(),
-    provideHttpClient(withInterceptors([loadingInterceptor])),
   ]
-
 };

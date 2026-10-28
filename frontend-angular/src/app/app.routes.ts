@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ErrorPageComponent } from './componentes/shared/error-page-component/error-page-component';
+import { ErrorPageComponent } from './contatos-função/componentes/shared/error-page-component/error-page-component';
 
 export const routes: Routes = [
 
@@ -12,11 +12,11 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./componentes/dashboard/dashboard').then((m) => m.Dashboard),
+    loadComponent: () => import('./contatos-função/componentes/dashboard/dashboard').then((m) => m.Dashboard),
   },
   {
     path: 'contatos',
-    loadComponent: () => import('./componentes/contatos/contatos').then((m) => m.Crm),
+    loadComponent: () => import('./contatos-função/contatos/contatos').then((m) => m.Crm),
   },
     {
     path: 'erro',
